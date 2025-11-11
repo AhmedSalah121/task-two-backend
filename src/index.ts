@@ -1,11 +1,18 @@
 import express, { Request, Response } from 'express';
+import cors from "cors";
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('Server running!');
+app.use(cors());
+app.use(express.json());
+
+app.get("/", async (req: Request, res: Response) => {
+  res.json({ status: "API running successfully on Vercel" });
 });
 
-app.listen(3000, () => {
-    console.log('Server running http://localhost:3000/');
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at port: ${PORT}`);
 });
+
+export default app;

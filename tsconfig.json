@@ -5,9 +5,10 @@
     // "rootDir": "./src",
     // "outDir": "./dist",
     "target": "es2020",
-    "module": "commonjs",
+    "module": "nodenext",
+    "moduleResolution": "NodeNext",
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -41,5 +42,8 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-  }
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  },
+  "include": ["api", "src", "prisma"]
 }
