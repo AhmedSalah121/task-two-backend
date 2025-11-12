@@ -3,6 +3,9 @@ import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'change_this_secret';
 
+/**
+ * Extended Express Request with authenticated user information
+ */
 export interface AuthRequest extends Request {
   userId?: string;
   userEmail?: string;
@@ -10,6 +13,12 @@ export interface AuthRequest extends Request {
   userRole?: string;
 }
 
+/**
+ * Verifies JWT token from Authorization header and attaches user info to request
+ * 
+ * @example router.post('/discussions', authenticate, createDiscussion);
+ * @throws {401} No token provided or invalid token
+ */
 export function authenticate(req: AuthRequest, res: Response, next: NextFunction) {
   try {
     const authHeader = req.headers.authorization;
@@ -38,7 +47,10 @@ export function authenticate(req: AuthRequest, res: Response, next: NextFunction
 }
 
 /**
- * Middleware to ensure user is registered (not Guest)
+ * Ensures user is registered (not Guest). Must be used after authenticate middleware.
+ * 
+ * @example router.post('/discussions', authenticate, requireRegisteredUser, createDiscussion);
+ * @throws {403} Access denied for Guest users
  */
 export function requireRegisteredUser(req: AuthRequest, res: Response, next: NextFunction) {
   if (!req.userRole || req.userRole === 'Guest') {
